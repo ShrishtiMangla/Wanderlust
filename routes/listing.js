@@ -4,6 +4,9 @@ const wrapAsync = require("../utils/wrapAsync.js");
 const ExpressError = require("../utils/ExpressError.js");
 const Listing = require("../models/listing");
 const { isLoggedIn , isOwner , validateListing } = require("../init/middleware.js");
+const multer  = require('multer')//form ke ander ki files ko nikalkr uploads m save krne k liye
+const{storage} = require("../cloudConfig.js")//cloudinary m upload k liye
+const upload = multer({ storage })
 
 const listingController = require("../controllers/listings.js");
 
@@ -12,11 +15,14 @@ const listingController = require("../controllers/listings.js");
 //create route
 router.route("/")
 .get( wrapAsync (listingController.index))
-.post(
-  isLoggedIn,
-  validateListing,
-  wrapAsync(listingController.createListing)
-);
+// .post(
+//   isLoggedIn,
+//   validateListing,
+//   wrapAsync(listingController.createListing)
+// );
+.post(upload.single('listing[image]'),(req,res) => {
+  res.send(req.file);
+})
 
 //new route
 router.get("/new", isLoggedIn,listingController.renderNewForm);
