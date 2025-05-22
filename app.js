@@ -53,9 +53,9 @@ const sessionOptions = {
   }
 };
 
-app.get("/", (req, res) => {
-  res.send("root is working");
-});
+// app.get("/", (req, res) => {
+//   res.send("root is working");
+// });
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -95,4 +95,3 @@ app.listen(3000, () => {
 });
 
 
-//till phase 3-a video 4

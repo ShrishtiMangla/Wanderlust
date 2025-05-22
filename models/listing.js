@@ -12,11 +12,13 @@ const listingSchema = new Schema({
         
         },
         image: {
-            type: String,
-            default:"https://unsplash.com/photos/brown-wooden-table-and-chairs-JTUmzXLoqHQ",
-        // //case:img link not exists undefuned or image not given
-        set:(v)=> v ==="" ? "https://unsplash.com/photos/brown-wooden-table-and-chairs-JTUmzXLoqHQ" : v
-        //when image link is empty
+            url: {
+                type: String,
+               
+            },
+            filename: {
+                type: String,
+            }
         },
         
     price: {

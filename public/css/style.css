@@ -1,15 +1,28 @@
 /* body */
-*{
-    font-family: "Plus Jakarta Sans", serif !important;
-    
+* {
+    font-family: "Plus Jakarta Sans", serif;
 }
-
+[class*="fa-"] {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
 .fa-star{
-    color: hwb(55 26% 0%) !important;
-    font-family: "Font Awesome 6 Free" !important;
+    color: hwb(55 26% 0%) ;
+    font-family: "Font Awesome 6 Free" ;
     margin-left: 2 rem;
 }
-
+.fa-solid,
+.fa-regular {
+    font-family: "Font Awesome 6 Free" !important;
+}
+.fa-brands {
+    font-family: "Font Awesome 6 Brands" !important;
+}
+.f-info-socials i {
+    font-weight: 400 !important;
+    font-style: normal !important;
+    display: inline-block !important;
+    font-size: 1.5rem !important;
+}
 .container{
     flex:1;
 }
