@@ -10,7 +10,6 @@ const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
-const MongoStore = require('connect-mongo');
 const flash = require ("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -23,8 +22,8 @@ const userRouter = require("./routes/user.js");
 app.use(methodOverride("_method")); // Enables PUT and DELETE requests from forms
 app.use(express.urlencoded({ extended: true })); // Required to parse form data
 
-const dbUrl = process.env.ATLASdb_URL ;
 
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 main()
   .then(() => {
     console.log("connection successful");
@@ -32,7 +31,7 @@ main()
   .catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect(dbUrl);
+  await mongoose.connect(MONGO_URL);
 }
 
 app.set("view engine", "ejs");
@@ -43,21 +42,8 @@ app.use(express.urlencoded({ extended: true })); //to parse data
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-const store = MongoStore.create({
-  mongoUrl: dbUrl,
-  crypto: {
-    secret: process.env.SECRET,
-  },
-  touchAfter: 24 * 60 * 60,
-});
-
-store.on("error", ()=>{
-  console.log("session store error",err);
-});
-
 const sessionOptions = {
-  store: store,
-  secret: process.env.SECRET,
+  secret: "mysupersecretcode",
   resave : false ,
   saveUninitialized: true,
   cookie:{
@@ -70,8 +56,6 @@ const sessionOptions = {
 // app.get("/", (req, res) => {
 //   res.send("root is working");
 // });
-
-
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -109,5 +93,4 @@ app.use((err, req, res, next) => {
 app.listen(3000, () => {
   console.log("server is listening to port");
 });
-
 
